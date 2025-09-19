@@ -1,5 +1,5 @@
 My groupmembers are:
-- XXXX
+- Ari McGlynn
 - XXXX
 - XXXX
 - XXXX
