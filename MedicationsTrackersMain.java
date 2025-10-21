@@ -4,32 +4,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MedicationTrackersMain {
-    public static void Main(String[] args) {
-        JFrame mainFrame = new JFrame("Main Window");
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setSize(300, 200);
+    private JFrame window;
+    private ScreenManager manager;
 
-        JButton openButton = new JButton("Open New Window");
-        mainFrame.add(openButton);
+    public MedicationTrackersMain() {
+        window = new JFrame("Medication Trackers");
+        window.setSize(800, 600);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
 
-        openButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame newWindow = new JFrame("New Window");
-                newWindow.setSize(200, 150);
-                newWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                JLabel label = new JLabel("Home Screen", SwingConstants.CENTER);
-                newWindow.add(label);
-                newWindow.setVisible(true);
-            }
-        });
+        manager = new ScreenManager(Window);
+        manager.push(new MenuScreen(window, manager));
+    }
 
-        mainFrame.setVisible(true);
-
-        Stack<SuperScreen> stack = new Stack<>();
-        boolean isWindowOpen = true;
-        while (isWindowOpen) {
-            stack.peek();
-        }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(MedicationTrackersMain::new);
     }
 }
