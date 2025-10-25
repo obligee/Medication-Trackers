@@ -12,6 +12,6 @@ public abstract class SuperScreen {
     }
 
     public abstract void onEnter();
-    public abstract void onExite();
+    public abstract void onExit();
     public abstract JPanel getPanel();
 }
