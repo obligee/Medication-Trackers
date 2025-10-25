@@ -1,3 +1,5 @@
+package core;
+
 import javax.swing.*;
 import java.util.Stack;
 

@@ -1,3 +1,6 @@
+package core;
+
+
 import javax.swing.*;
 
 

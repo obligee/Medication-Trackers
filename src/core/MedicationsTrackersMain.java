@@ -1,3 +1,5 @@
+package core;
+
 import java.util.Stack;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
