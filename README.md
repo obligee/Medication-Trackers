@@ -2,10 +2,10 @@ My groupmembers are:
 - Ari McGlynn
 - Christian Simon
 - Obed Asmerom
-- Ari McGlynn
 - Shawn Cardella
 - Groom Bekele
 - Sahaj Sharma
+- Sean Yoo
 
 
 ------------------ Fill in some information about your project under this ------------------
