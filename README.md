@@ -2,7 +2,6 @@ My groupmembers are:
 - Ari McGlynn
 - Christian Simon
 - Obed Asmerom
-- Ari McGlynn
 - Shawn Cardella
 - Groom Bekele
 - Sahaj Sharma
