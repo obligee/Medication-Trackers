@@ -2,6 +2,7 @@ package core;
 
 import javax.swing.*;
 
+
 public abstract class SuperScreen {
     private final JFrame window;
 

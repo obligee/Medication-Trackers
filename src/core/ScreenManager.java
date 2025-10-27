@@ -23,6 +23,7 @@ public class ScreenManager {
         window.repaint();
     }
 
+
     public void pop() {
         if (!screens.isEmpty()) {
             screens.peek().onExit();

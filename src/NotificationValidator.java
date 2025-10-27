@@ -1,5 +1,6 @@
 package core;
 
+
 import java.util.List;
 
 //UC1 Validator(Make sure that all answers are full and not left blank)
