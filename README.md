@@ -5,6 +5,7 @@ My groupmembers are:
 - Shawn Cardella
 - Groom Bekele
 - Sahaj Sharma
+- Sean Yoo
 
 
 ------------------ Fill in some information about your project under this ------------------
