@@ -14,11 +14,10 @@ public class MedicationsTrackersMain {
         window.setVisible(true);
 
         manager = new ScreenManager(window);
-        //manager.push(new MenuScreen(window, manager));
+        //make sure the MenuScreen appears
+        manager.push(new screens.MenuScreen(window, manager));
     }
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MedicationsTrackersMain::new);
     }
-
 }
