@@ -17,6 +17,7 @@ public class CustomerNotificationsScreen extends SuperScreen {
     private final ScreenManager manager;
     private final CardLayout cards = new CardLayout();
     private final JPanel root = new JPanel(cards);
+    private ArrayList<String[]> medicationList; // Data from MenuScreen
     // screen 1 controls
     private JLabel fileLabel;
     private JRadioButton allowRb;
@@ -26,9 +27,10 @@ public class CustomerNotificationsScreen extends SuperScreen {
     private DefaultTableModel medsModel;
     // screen 3 controls
     private JTextArea summaryBox;
-    public CustomerNotificationsScreen(JFrame window, ScreenManager manager) {
+    public CustomerNotificationsScreen(JFrame window, ScreenManager manager, ArrayList<String[]> medicationList) {
         super(window);
         this.manager = manager;
+        this.medicationList = medicationList;
         buildUI();
         window.setTitle("Medication Trackers — Customer Notifications");
     }
@@ -162,9 +164,18 @@ public class CustomerNotificationsScreen extends SuperScreen {
     }
     private void populateMockMeds() {
         medsModel.setRowCount(0);
-        medsModel.addRow(new Object[]{"Atorvastatin 20 mg", "08:00", "—"});
-        medsModel.addRow(new Object[]{"Metformin 500 mg",   "20:00", "—"});
-        medsModel.addRow(new Object[]{"Lisinopril 10 mg",   "09:00", "—"});
+        // Use actual medication data from MenuScreen if available
+        if (medicationList != null && !medicationList.isEmpty()) {
+            for (String[] med : medicationList) {
+                // med[0] = medication name, med[1] = doctor, med[2] = dosage, med[3] = time interval
+                medsModel.addRow(new Object[]{med[0], med[3], "—"});
+            }
+        } else {
+            // Fallback to mock data if no file was uploaded
+            medsModel.addRow(new Object[]{"Atorvastatin 20 mg", "08:00", "—"});
+            medsModel.addRow(new Object[]{"Metformin 500 mg",   "20:00", "—"});
+            medsModel.addRow(new Object[]{"Lisinopril 10 mg",   "09:00", "—"});
+        }
     }
     private void onConfirm() {
         if (medsTable.isEditing()) {
