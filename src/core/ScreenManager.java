@@ -30,6 +30,7 @@ public class ScreenManager {
             window.remove(screens.peek().getPanel());
         }
         if (!screens.isEmpty()) {
+            screens.pop();
             SuperScreen screen = screens.peek();
             window.setContentPane(screen.getPanel());
             screen.onEnter();

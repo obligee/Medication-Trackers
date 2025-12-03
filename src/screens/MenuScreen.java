@@ -1,15 +1,17 @@
 package screens;
+
 import core.ScreenManager;
 import core.SuperScreen;
+
+import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.*;
 
-public class MenuScreen extends SuperScreen {
+public class MenuScreen extends SuperScreen{
     private JPanel panel;
     private final ScreenManager manager;
     private ArrayList<String[]> medicationList=new ArrayList<>();
@@ -17,57 +19,59 @@ public class MenuScreen extends SuperScreen {
     public MenuScreen(JFrame window,ScreenManager manager){
         super(window);
         this.manager=manager;
+
         panel=new JPanel(new BorderLayout());
-
-        // ✅ new button for UC01
-        JButton notificationsBtn=new JButton("Customer Notifications (UC01)");
-        notificationsBtn.addActionListener(e->manager.push(new CustomerNotificationsScreen(getWindow(),manager,medicationList)));
-
-        // existing buttons…
+        // existing buttons
         JButton startButton=new JButton("Contacts Screen");
+        JButton importMedFileButton=new JButton("Import Medication File");
+        JButton exitButton=new JButton("Exit");
+        // new button for UC01
+        JButton notificationsBtn=new JButton("Customer Notifications (UC01)");
+        JButton medicalPageButton=new JButton("Medical Page (UC02)");
+
+        notificationsBtn.addActionListener(e->manager.push(new CustomerNotificationsScreen(getWindow(),manager,medicationList)));
+        medicalPageButton.addActionListener(e->manager.push(new MedicalPageScreen(getWindow(),manager)));
         startButton.addActionListener(e->manager.push(new ContactsScreen(getWindow(),manager,medicationList)));
 
-        JButton importMedFileButton=new JButton("Import Medication File");
         importMedFileButton.addActionListener(e->{
             JFileChooser fileChooser=new JFileChooser();
-            int returnValue=fileChooser.showOpenDialog(getWindow());
+            int returnValue=fileChooser.showOpenDialog(null);
             if(returnValue==JFileChooser.APPROVE_OPTION){
                 File selectedFile=fileChooser.getSelectedFile();
                 medicationList=parseMedFile(selectedFile);
-                JOptionPane.showMessageDialog(getWindow(),"Imported "+medicationList.size()+" medication rows.");
                 for(String[] med:medicationList){
-                    System.out.println("Medication:"+med[0]+", Doctor:"+med[1]+", Dosage:"+med[2]+", Time:"+med[3]+", Phone:"+med[4]+", Email:"+med[5]);
+                    System.out.println("Medication: "+med[0]+", Doctor: "+med[1]+
+                            ", Dosage: "+med[2]+", Time Interval: "+med[3]+", Doctor Phone Number: "+med[4]+", Doctor Email: "+med[5]);
                 }
             }
         });
 
-        JButton exitButton=new JButton("Exit");
-        exitButton.addActionListener(e->System.exit(0));
+        JPanel topPanel=new JPanel(new GridLayout(1,2,10,0));
+        topPanel.add(notificationsBtn);
+        topPanel.add(medicalPageButton);
 
-        JPanel leftStrip=new JPanel();
-        leftStrip.setLayout(new BoxLayout(leftStrip,BoxLayout.Y_AXIS));
-        leftStrip.setBorder(BorderFactory.createEmptyBorder(12,12,12,12));
-        leftStrip.add(notificationsBtn);
-        leftStrip.add(Box.createVerticalStrut(8));
-        leftStrip.add(startButton);
-        leftStrip.add(Box.createVerticalStrut(8));
-        leftStrip.add(importMedFileButton);
-        leftStrip.add(Box.createVerticalStrut(8));
-        leftStrip.add(exitButton);
-        panel.add(leftStrip,BorderLayout.WEST);
+        panel.add(topPanel,BorderLayout.NORTH);
+        panel.add(startButton,BorderLayout.CENTER);
+        panel.add(importMedFileButton,BorderLayout.EAST);
+        panel.add(exitButton,BorderLayout.SOUTH);
     }
 
-    @Override public void onEnter(){
+    @Override
+    public void onEnter(){
         System.out.println("Entering MenuScreen");
         getWindow().setContentPane(panel);
         getWindow().revalidate();
     }
 
-    @Override public void onExit(){
+    @Override
+    public void onExit(){
         System.out.println("Exiting MenuScreen");
     }
 
-    @Override public JPanel getPanel(){return panel;}
+    @Override
+    public JPanel getPanel(){
+        return panel;
+    }
 
     public ArrayList<String[]> parseMedFile(File medFile){
         ArrayList<String[]> medList=new ArrayList<>();
@@ -90,12 +94,8 @@ public class MenuScreen extends SuperScreen {
             }
         }catch(IOException e){
             e.printStackTrace();
-            JOptionPane.showMessageDialog(getWindow(),"Failed to read file: "+e.getMessage(),"Import Error",JOptionPane.ERROR_MESSAGE);
         }
-        if(!medList.isEmpty()){
-            String first=medList.get(0)[0].toLowerCase();
-            if(first.contains("medication")||first.contains("med"))medList.remove(0);
-        }
+        if(!medList.isEmpty())medList.remove(0);
         return medList;
     }
 }
